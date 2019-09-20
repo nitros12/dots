@@ -1,0 +1,23 @@
+[user]
+	email = ben@bensimms.moe
+	name = Ben Simms
+	signingkey = 3C3A2E1E088D295B
+[credential]
+	helper = cache
+[core]
+	editor = nvim
+	excludesfile = /home/ben/.gitignore
+[commit]
+	gpgsign = true
+[magit]
+	hideCampaign = true
+[github]
+	user = nitros12
+	oauth-token = 1f28ad8a9f6ad2847eb54a7a5440254a84dce252
+[alias]
+	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true

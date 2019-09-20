@@ -1,0 +1,9 @@
+git_repos = [
+  "~/.doom.d"
+]
+
+disable = ["emacs"]
+
+[commands]
+"Doom refresh" = "cd ~/.doom.d; ~/.emacs.d/bin/doom refresh"
+"Doom update" = "cd ~/.doom.d; ~/.emacs.d/bin/doom update"
