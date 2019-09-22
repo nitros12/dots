@@ -57,31 +57,9 @@ if test "$TERM" = "dumb"
   function fish_right_prompt; end
   function fish_greeting; end
   function fish_title; end
+else
+  eval (starship init fish)
 end
-
-set SPACEFISH_HASKELL_SHOW false
-
-set SPACEFISH_USER_COLOR "blue"
-set SPACEFISH_USER_SHOW "always"
-
-set SPACEFISH_CHAR_SYMBOL "λ"
-set SPACEFISH_CHAR_COLOR_SUCCESS "purple"
-
-set SPACEFISH_GIT_BRANCH_COLOR "green"
-set SPACEFISH_GIT_STATUS_PREFIX " ("
-set SPACEFISH_GIT_STATUS_SUFFIX " )"
-set SPACEFISH_GIT_STATUS_COLOR "blue"
-
-set SPACEFISH_GIT_STATUS_UNTRACKED " untracked"
-set SPACEFISH_GIT_STATUS_MODIFIED  " unstaged"
-set SPACEFISH_GIT_STATUS_ADDED     " added"
-set SPACEFISH_GIT_STATUS_RENAMED   " renamed"
-set SPACEFISH_GIT_STATUS_DELETED   " deleted"
-set SPACEFISH_GIT_STATUS_STASHED   " stashed"
-set SPACEFISH_GIT_STATUS_UNMERGED  " unmerged"
-
-
-set SPACEFISH_HASKELL_COLOR "yellow"
 
 function start_tmux
     if type tmux > /dev/null
