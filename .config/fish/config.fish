@@ -62,12 +62,13 @@ else
 end
 
 function start_tmux
-    if type tmux > /dev/null
-        #if not inside a tmux session, and if no session is started, start a new session
-        if test -z "$TMUX" ; and test -z $TERMINAL_CONTEXT
-            tmux -2 attach; or tmux -2 new-session
-        end
-    end
+  if status --is-login
+      set PPID (echo (ps --pid %self -o ppid --no-headers) | xargs)
+      if ps --pid $PPID | grep ssh
+          tmux has-session -t remote; and tmux attach-session -t remote; or tmux new-session -s remote; and kill %self
+          echo "tmux failed to start; using plain fish shell"
+      end
+  end
 end
 
 start_tmux
