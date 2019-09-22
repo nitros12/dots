@@ -1,0 +1,7 @@
+[character]
+symbol = "λ"
+
+[git_status]
+prefix = "("
+suffix = ")"
+style = "bold blue"
