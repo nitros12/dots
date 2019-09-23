@@ -3,5 +3,5 @@ symbol = "λ"
 
 [git_status]
 prefix = "("
-suffix = ")"
+suffix = ") "
 style = "bold blue"
