@@ -1,5 +1,6 @@
 git_repos = [
-  "~/.doom.d"
+  "~/.doom.d",
+  "~/.emacs.d"
 ]
 
 disable = ["emacs"]
