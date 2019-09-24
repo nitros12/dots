@@ -65,12 +65,15 @@ function start_tmux
   if status --is-login
       set PPID (echo (ps --pid %self -o ppid --no-headers) | xargs)
       if ps --pid $PPID | grep ssh
+          tmux -2 setenv -g IS_SSH_CONN 1
           tmux -2 source-file ~/.tmux.conf
           tmux -2 attach-session; or tmux -2 new-session; and kill %self
           echo "tmux failed to start; using plain fish shell"
       end
   else
     if test -z "$TMUX" ; and test -z $TERMINAL_CONTEXT
+        tmux -2 setenv -gr IS_SSH_CONN
+        tmux -2 source-file ~/.tmux.conf
         tmux -2 attach-session; or exec tmux -2 new-session
     end
   end
