@@ -72,9 +72,9 @@ function start_tmux
       end
   else
     if test -z "$TMUX" ; and test -z $TERMINAL_CONTEXT
-        tmux -2 setenv -gr IS_SSH_CONN
-        tmux -2 source-file ~/.tmux.conf
-        tmux -2 attach-session; or exec tmux -2 new-session
+        tmux -2 setenv -gru IS_SSH_CONN
+        tmux source-file ~/.tmux.conf
+        exec tmux new-session -A -s local
     end
   end
 end
