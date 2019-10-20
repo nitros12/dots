@@ -7,6 +7,7 @@
 [core]
 	editor = nvim
 	excludesfile = /home/ben/.gitignore
+	autocrlf = input
 [commit]
 	gpgsign = true
 [magit]
