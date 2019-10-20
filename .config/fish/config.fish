@@ -1,6 +1,5 @@
 set -xg NPM_PACKAGES "$HOME/.npm-packages"
 set -x XDG_CONFIG_HOME "$HOME/.config"
-set -xg PATH "/opt/cuda/bin" "$HOME/.poetry/bin" "$NPM_PACKAGES/bin" $HOME/.cargo/bin $HOME/.local/bin $HOME/.gem/ruby/2.5.0/bin /app/* $PATH
 set -xg EDITOR nvim
 set -xg CFLAGS "-march=native -mtune=native -O2 -pipe"
 set -xg CXXFLAGS $CFLAGS
@@ -11,6 +10,11 @@ set -xg GRADLE_USER_HOME ~/.gradle
 set -xg ERL_AFLAGS "-kernel shell_history enabled"
 
 set -U FZF_LEGACY_KEYBINDINGS 0
+
+set -gx PATH
+set -gx PATH /user/local/bin /usr/local/sbin
+set -gx PATH $PATH "/opt/cuda/bin" "$HOME/.poetry/bin" "$NPM_PACKAGES/bin" $HOME/.cargo/bin $HOME/.local/bin $HOME/.gem/ruby/2.5.0/bin /app/*
+set -gx PATH /usr/bin /bin /usr/sbin /sbin $PATH
 
 function ls
     exa $argv
