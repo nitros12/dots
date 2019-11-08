@@ -1,0 +1,19 @@
+#!/bin/bash
+if [ "$1" == "up" ]
+then
+	xbacklight -inc 10
+elif [ "$1" == "down" ]
+then
+	xbacklight -dec 10
+fi
+
+BRIGHTNESS=`xbacklight`
+TEXT=$(printf %.0f $BRIGHTNESS)
+
+ID=$(cat /tmp/.dunst_bright)
+if [ $ID -gt "0" ]
+then
+	dunstify -a "Brightness" -p -r $ID "$TEXT" > /tmp/.dunst_bright
+else
+	dunstify -a "Brightness" -p "$TEXT" > /tmp/.dunst_bright
+fi

@@ -1,0 +1,195 @@
+import System.Exit
+
+import XMonad
+import XMonad.Config.Desktop
+import qualified XMonad.StackSet as W
+import qualified Data.Map as M
+import GHC.IO.Handle
+
+import XMonad.Layout.LayoutModifier
+import XMonad.Layout.Gaps
+import XMonad.Layout.Spacing
+import XMonad.Layout.MultiToggle
+import XMonad.Layout.NoBorders
+import XMonad.Layout.MultiToggle.Instances
+import XMonad.Layout.ResizableTile
+import XMonad.Layout.MouseResizableTile
+import XMonad.Layout.BinarySpacePartition
+import XMonad.Layout.SimpleFloat
+import XMonad.Layout.PerWorkspace (onWorkspace)
+import XMonad.Layout.Fullscreen
+import XMonad.Layout.Minimize
+import XMonad.Layout.IndependentScreens
+
+import XMonad.Actions.Navigation2D
+import XMonad.Actions.GridSelect
+import XMonad.Actions.UpdatePointer
+import XMonad.Actions.SpawnOn
+import XMonad.Actions.CycleWS
+import XMonad.Actions.WindowBringer
+
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.SetWMName
+import XMonad.Hooks.EwmhDesktops
+import XMonad.Hooks.ManageDocks
+
+import XMonad.Util.NamedScratchpad
+import XMonad.Util.WorkspaceCompare
+import XMonad.Util.Run
+import XMonad.Util.EZConfig
+import XMonad.Util.SpawnOnce
+
+
+takeScrot = "scrot screen_%Y-%m-%d-%H-%M.png -d 1"
+
+myXmobarrc = "~/.xmonad/xmobarrc.hs"
+
+myWorkspaces = ["1:term", "2:web", "3:prog"] ++ map show [4..7] ++ ["8:spotify", "9:full"]
+
+myManageHook = composeAll
+               [ className =? "Firefox"    --> doShift "2:web"
+               , className =? "Emacs"      --> doShift "3:prog"
+               , className =? "PyCharm"    --> doShift "3:prog"
+	       , className =? "Spotify"    --> doShift "8:spotify"
+	       , title =? "Minecraft"      --> doFloat
+             --  , isFullscreen --> (doF W.focusDown <+> doFullFloat)
+               ]  <+> manageDocks
+
+
+addKeys = [ ("<XF86AudioLowerVolume>", spawn "/home/ben/.xmonad/scripts/volume.sh down")
+          , ("<XF86AudioRaiseVolume>", spawn "/home/ben/.xmonad/scripts/volume.sh up")
+          , ("<XF86AudioMute>", spawn "/home/ben/.xmonad/scripts/volume.sh mute")
+          , ("<XF86MonBrightnessDown>", spawn "/home/ben/.xmonad/scripts/brightness.sh down")
+          , ("<XF86MonBrightnessUp>", spawn "/home/ben/.xmonad/scripts/brightness.sh up")
+          ]
+
+
+myNormalBorderColor = "#2d2d2d"
+
+myFocusedBorderColor = "#6699cc"
+
+myBlueColour = "#6699cc"
+
+myYellowColour = "#ffcc66"
+
+
+myConfig xmproc = desktopConfig
+   { terminal = "urxvt"
+   , modMask = mod4Mask
+   , borderWidth = 3
+   , workspaces = myWorkspaces
+   , logHook = dynamicLogWithPP xmobarPP
+       { ppOutput = hPutStrLn xmproc
+       , ppTitle = xmobarColor myBlueColour "" . shorten 50
+       , ppLayout = const ""
+       , ppCurrent = xmobarColor myYellowColour "" . wrap "[" "]"
+       }
+   , normalBorderColor = myNormalBorderColor
+   , focusedBorderColor = myFocusedBorderColor
+   , manageHook = myManageHook <+> manageHook desktopConfig
+   , keys = myKeys
+   , layoutHook = myLayout
+   , startupHook = myStartupHook
+   } `additionalKeysP` addKeys
+
+
+myLayout = onWorkspace "9:full" layoutFull $ innerLayout -- mouseResizableTile ||| innerLayout
+
+layoutFull = noBorders $ fullscreenFull Full
+
+innerLayout = desktopLayoutModifiers $
+       minimize $
+       avoidStruts $
+       spacing 4 $
+       gaps [(U, 3), (R, 3), (L, 3), (D, 3)] $
+       emptyBSP
+
+
+myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
+
+  [ ((modMask, xK_Return)
+    , spawn $ XMonad.terminal conf)
+  , ((modMask, xK_o)
+    , spawn "rofi -show window")
+  , ((modMask, xK_p)
+    , spawn "rofi -show drun")
+  , ((modMask, xK_Print)
+    , spawn takeScrot)
+  ] ++
+    [ ((modMask .|. shiftMask, xK_c     ), kill) -- %! Close the focused window
+
+    , ((modMask,               xK_space ), sendMessage NextLayout) -- %! Rotate through the available layout algorithms
+    , ((modMask .|. shiftMask, xK_space ), setLayout $ XMonad.layoutHook conf) -- %!  Reset the layouts on the current workspace to default
+
+    , ((modMask,               xK_n     ), refresh) -- %! Resize viewed windows to the correct size
+
+    -- move focus up or down the window stack
+    , ((modMask,               xK_Tab   ), windows W.focusDown) -- %! Move focus to the next window
+    , ((modMask .|. shiftMask, xK_Tab   ), windows W.focusUp  ) -- %! Move focus to the previous window
+    , ((modMask,               xK_j     ), windows W.focusDown) -- %! Move focus to the next window
+    , ((modMask,               xK_k     ), windows W.focusUp  ) -- %! Move focus to the previous window
+    , ((modMask,               xK_m     ), windows W.focusMaster  ) -- %! Move focus to the master window
+
+    -- modifying the window order
+    , ((modMask .|. shiftMask, xK_j     ), windows W.swapDown  ) -- %! Swap the focused window with the next window
+    , ((modMask .|. shiftMask, xK_k     ), windows W.swapUp    ) -- %! Swap the focused window with the previous window
+
+    -- resizing the master/slave ratio
+    , ((modMask,               xK_h     ), sendMessage Shrink) -- %! Shrink the master area
+    , ((modMask,               xK_l     ), sendMessage Expand) -- %! Expand the master area
+
+    -- floating layer support
+    , ((modMask,               xK_t     ), withFocused $ windows . W.sink) -- %! Push window back into tiling
+
+    -- increase or decrease number of windows in the master area
+    , ((modMask              , xK_comma ), sendMessage (IncMasterN 1)) -- %! Increment the number of windows in the master area
+    , ((modMask              , xK_period), sendMessage (IncMasterN (-1))) -- %! Deincrement the number of windows in the master area
+
+    -- quit, or restart
+    , ((modMask .|. shiftMask, xK_q     ), io (exitWith ExitSuccess)) -- %! Quit xmonad
+    , ((modMask              , xK_q     ), spawn "if type xmonad; then xmonad --recompile && xmonad --restart; else xmessage xmonad not in \\$PATH: \"$PATH\"; fi") -- %! Restart xmonad
+    ]
+    ++
+    -- mod-[1..9] %! Switch to workspace N
+    -- mod-shift-[1..9] %! Move client to workspace N
+    [((m .|. modMask, k), windows $ f i)
+        | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
+        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+    ++
+    -- mod-{w,e,r} %! Switch to physical/Xinerama screens 1, 2, or 3
+    -- mod-shift-{w,e,r} %! Move client to screen 1, 2, or 3
+    [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
+        | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
+        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
+
+navigation :: XConfig l -> XConfig l
+navigation config = navigation2D def (xK_Up, xK_Left, xK_Down, xK_Right)
+                                     [(mod4Mask,               windowGo)
+                                     ,(mod4Mask .|. shiftMask, windowSwap)
+                                     ]
+                                     False
+                  $ config
+
+toggleDisplays = do
+  screenCount <- countScreens
+  if screenCount > 1
+    then spawn "xrandr --output HDMI2 --rotate normal --dpi 96x97 --auto --right-of eDP1"
+    else spawn "xrandr --output HDMI2 --off"
+
+myStartupHook = do
+  spawnOnce "light-locker"
+  spawnOnce "udiskie"
+  spawnOnce "compton"
+  spawnOnce "wal -f /home/ben/.my-colours.json"
+  spawnOnce "feh --bg-scale Pictures/wallpapers/alley.jpg"
+  spawnOnce "autocutsel"
+  toggleDisplays
+  -- spawnOnce "dunst"
+
+main = do
+  spawn "xsetroot -cursor_name left_ptr"
+  spawn "xset r rate 250 40"
+  spawn "/home/ben/.xmonad/scripts/unmute.sh" -- dunno
+  xmproc <- spawnPipe ("/usr/bin/xmobar " ++ myXmobarrc)
+  xmonad . ewmh . navigation . myConfig $ xmproc

@@ -12,8 +12,8 @@ set -xg ERL_AFLAGS "-kernel shell_history enabled"
 set -U FZF_LEGACY_KEYBINDINGS 0
 
 set -gx PATH
-set -gx PATH /user/local/bin /usr/local/sbin
-set -gx PATH $PATH "/opt/cuda/bin" "$HOME/.poetry/bin" "$NPM_PACKAGES/bin" $HOME/.cargo/bin $HOME/.local/bin $HOME/.gem/ruby/2.5.0/bin /app/*
+set -gx PATH /usr/local/bin /usr/local/sbin
+set -gx PATH $PATH "/opt/cuda/bin" "$HOME/.poetry/bin" "$NPM_PACKAGES/bin" $HOME/.cargo/bin $HOME/.local/bin $HOME/.gem/ruby/2.5.0/bin /home/ben/.gem/ruby/2.6.0/bin /app/*
 set -gx PATH /usr/bin /bin /usr/sbin /sbin $PATH
 
 function ls

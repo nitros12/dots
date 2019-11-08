@@ -1,0 +1,5 @@
+#!/bin/bash
+if pamixer --get-mute | grep -q 'true';
+then
+	pulseaudio-ctl mute
+fi
