@@ -1,0 +1,90 @@
+-- docs: http://projects.haskell.org/xmobar
+Config {
+  font = "xft:Source Code Pro:size=10:antialias=true",
+  bgColor = "#2d2d2d",
+  fgColor = "#cccccc",
+  position = Static { xpos = 7, ypos = 0, width = 1906, height = 22 },
+  lowerOnStart = True,
+  commands
+    = [ Run Memory [ "--template"
+                   , "<usedratio>%"
+                   , "--High"
+                   , "8192"
+                   , "--Low"
+                   , "4096"
+                   , "--high"
+                   , "#f2777a"
+                   , "--normal"
+                   , "#66cccc"
+                   , "--low"
+                   , "#6699cc"
+                   , "--minwidth"
+                   , "2"
+                   ] 20
+      , Run CoreTemp
+            [ "--High"
+            , "60"
+            , "--Low"
+            , "40"
+            , "--high"
+            , "#f2777a"
+            , "--normal"
+            , "#66cccc"
+            , "--low"
+            , "#6699cc"
+            , "--template"
+            , "<core0>C"
+            ] 60
+      , Run MultiCpu
+            [ "--template"
+            , "<total0>% <total1>%"
+            , "--Low"
+            , "50"
+            , "--High"
+            , "85"
+            , "--high"
+            , "#f2777a"
+            , "--normal"
+            , "#66cccc"
+            , "--low"
+            , "#6699cc"
+            , "--minwidth"
+            , "2"
+            ] 10
+      , Run Wireless "wlan0"
+            [ "--template", "<essid>", "--normal", "#66cccc" ] 40
+      , Run BatteryP [ "BAT0", "BAT1" ]
+            [ "--template"
+            , ("<acstatus>")
+            , "--Low"
+            , "10"
+            , "--High"
+            , "80"
+            , "--high"
+            , "#6699cc"
+            , "--normal"
+            , "#66cccc"
+            , "--low"
+            , "#f2777a"
+            , "--" -- battery specific options
+            , "-o"
+            , "<left>% (<timeleft>)" -- discharging status
+            , "-O"
+            , "Charging (<left>%)" -- AC "on" status
+            , "-i"
+            , "<left>% (<timeleft>)" -- charged status
+            , "-l"
+            , "#f2777a"
+            , "-m"
+            , "#66cccc"
+            , "-h"
+            , "#6699cc"
+            ] 100
+      , Run Date "%F (%a) %T" "date" 10
+      , Run Mpris2 "spotify" [ "-t", "<artist> - <title>" ] 10
+      , Run StdinReader
+      ],
+    sepChar = "%",
+    alignSep = "}{",
+    template = " %StdinReader% }{ %battery% | %wlan0wi% | %memory% | %coretemp% | %multicpu% | %mpris2% | %date%  "
+}

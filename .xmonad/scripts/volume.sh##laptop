@@ -1,0 +1,26 @@
+#!/bin/bash
+if [ "$1" == "up" ]
+then
+	pulseaudio-ctl up 5
+elif [ "$1" == "down" ]
+then
+	pulseaudio-ctl down 5
+elif [ "$1" == "mute" ]
+then
+	pulseaudio-ctl mute
+fi
+
+if pamixer --get-mute | grep -q 'true';
+then
+	TEXT="Muted"
+else
+	TEXT="$(pamixer --get-volume)%"
+fi
+
+ID=$(cat /tmp/.dunst_volume)
+if [ $ID -gt "0" ]
+then
+	dunstify -a "Volume" -p -r $ID "$TEXT" > /tmp/.dunst_volume
+else
+	dunstify -a "Volume" -p "$TEXT" > /tmp/.dunst_volume
+fi
