@@ -14,7 +14,6 @@
 	hideCampaign = true
 [github]
 	user = nitros12
-	oauth-token = 1f28ad8a9f6ad2847eb54a7a5440254a84dce252
 [alias]
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
 [filter "lfs"]
