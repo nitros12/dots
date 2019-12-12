@@ -52,19 +52,6 @@ complete -fa "(__fish_complete_pip)" -c pip
 
 alias git=hub
 
-# for when we ssh into this machine through emacs tramp
-if test "$TERM" = "dumb"
-  function fish_prompt
-    echo "\$ "
-  end
-
-  function fish_right_prompt; end
-  function fish_greeting; end
-  function fish_title; end
-else
-  eval (starship init fish)
-end
-
 function start_tmux
   set PPID (echo (ps --pid %self -o ppid --no-headers) | xargs)
   if status --is-login
@@ -85,4 +72,18 @@ function start_tmux
   end
 end
 
-start_tmux
+
+# for when we ssh into this machine through emacs tramp
+if test "$TERM" = "dumb" || test "$TERM" = ""
+  function fish_prompt
+    echo "\$ "
+  end
+
+  function fish_right_prompt; end
+  function fish_greeting; end
+  function fish_title; end
+else
+  eval (starship init fish)
+  start_tmux
+end
+
