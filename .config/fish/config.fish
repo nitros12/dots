@@ -16,29 +16,12 @@ set -gx PATH /usr/local/bin /usr/local/sbin
 set -gx PATH $PATH "/opt/cuda/bin" "$HOME/.poetry/bin" "$NPM_PACKAGES/bin" $HOME/.cargo/bin $HOME/.local/bin $HOME/.gem/ruby/2.5.0/bin /home/ben/.gem/ruby/2.6.0/bin /app/*
 set -gx PATH /usr/bin /bin /usr/sbin /sbin $PATH
 
-function ls
-    exa $argv
-end
-
-function ll
-    exa -l $argv
-end
-
-function la
-    exa -a $argv
-end
-
-function lla
-    exa -al $argv
-end
-
-function lt
-    exa -T $argv
-end
-
-function vim
-    nvim $argv
-end
+alias ls=exa
+alias ll='ls -l'
+alias la='ls -a'
+alias lla='ls -la'
+alias lt='ls -T'
+alias vim=nvim
 
 # pip fish completion start
 function __fish_complete_pip
