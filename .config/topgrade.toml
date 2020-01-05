@@ -3,7 +3,7 @@ git_repos = [
   "~/.emacs.d"
 ]
 
-disable = ["emacs", "go", "snap"]
+disable = ["emacs", "go"]
 
 [commands]
 "Doom refresh" = "cd ~/.doom.d; ~/.emacs.d/bin/doom refresh"
