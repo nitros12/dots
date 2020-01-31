@@ -17,6 +17,7 @@
 [alias]
 	lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
 	pushall = !git remote | xargs -L1 git push --all
+	prunemerged = git branch --merged | egrep -v \"(^\\*|master|dev)\" | xargs git branch -d
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
