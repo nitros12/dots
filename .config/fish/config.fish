@@ -13,8 +13,9 @@ set -U FZF_LEGACY_KEYBINDINGS 0
 
 set -gx PATH
 set -gx PATH /usr/local/bin /usr/local/sbin
+set -gx PATH /usr/local/opt/coreutils/libexec/gnubin $PATH
 set -gx PATH $PATH "/opt/cuda/bin" "$HOME/.poetry/bin" "$NPM_PACKAGES/bin" $HOME/.cargo/bin $HOME/.local/bin $HOME/.gem/ruby/2.5.0/bin /home/ben/.gem/ruby/2.6.0/bin /app/*
-set -gx PATH /usr/bin /bin /usr/sbin /sbin $PATH
+set -gx PATH $PATH /usr/bin /bin /usr/sbin /sbin /opt/local/bin /opt/local/sbin
 
 alias ls=exa
 alias ll='ls -l'
@@ -35,10 +36,12 @@ complete -fa "(__fish_complete_pip)" -c pip
 
 alias git=hub
 
+source ~/.iterm2_shell_integration.fish
+
 function start_tmux
-  set PPID (echo (ps --pid %self -o ppid --no-headers) | xargs)
+  set PPID (echo (ps -T -p %self -o ppid=) | xargs)
   if status --is-login
-      if ps --pid $PPID | grep ssh
+      if ps -T -p $PPID | grep ssh
           tmux -2 start-server
           tmux -2 setenv -g IS_SSH_CONN 1
           tmux -2 source-file ~/.tmux.conf
@@ -46,7 +49,7 @@ function start_tmux
           echo "tmux failed to start; using plain fish shell"
       end
   else
-    if not ps --pid $PPID | grep ssh && test -z "$TMUX" && test -z $TERMINAL_CONTEXT
+    if not ps -T -p $PPID | grep ssh && test -z "$TMUX" && test -z $TERMINAL_CONTEXT
         tmux -2 start-server
         tmux -2 setenv -gru IS_SSH_CONN
         tmux source-file ~/.tmux.conf
@@ -69,4 +72,3 @@ else
   eval (starship init fish)
   start_tmux
 end
-
