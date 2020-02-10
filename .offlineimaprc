@@ -1,0 +1,29 @@
+[general]
+accounts = Gmail
+pythonfile = ~/mu/lib.py
+
+[DEFAULT]
+
+
+[Account Gmail]
+localrepository = LocalGmail
+remoterepository = RepositoryGmail
+synclabels = yes
+labelsheader = X-Keywords
+maxconnections = 2
+
+[Repository LocalGmail]
+type = GmailMaildir
+localfolders = ~/.mail/gmail.com
+nametrans = nametrans
+
+[Repository RepositoryGmail]
+type = Gmail
+remoteusereval = get_pass("gmail.com")["user"]
+remotepasseval = get_pass("gmail.com")["password"]
+folderfilter = folder_filter
+realdelete=no
+ssl = true
+sslcacertfile = /usr/local/etc/openssl/cert.pem  # This will only work for macOS
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+nametrans = nametrans_reverse

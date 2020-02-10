@@ -34,7 +34,7 @@ end
 complete -fa "(__fish_complete_pip)" -c pip
 # pip fish completion end
 
-alias git=hub
+alias ssh="assh wrapper ssh"
 
 source ~/.iterm2_shell_integration.fish
 
