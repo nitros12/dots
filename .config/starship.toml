@@ -5,3 +5,6 @@ symbol = "λ"
 prefix = "("
 suffix = ") "
 style = "bold blue"
+
+[haskell]
+disabled=true
