@@ -1,5 +1,5 @@
 set -xg NPM_PACKAGES "$HOME/.npm-packages"
-set -x XDG_CONFIG_HOME "$HOME/.config"
+set -xg XDG_CONFIG_HOME "$HOME/.config"
 set -xg EDITOR nvim
 set -xg CFLAGS "-march=native -mtune=native -O2 -pipe"
 set -xg CXXFLAGS $CFLAGS
@@ -8,6 +8,7 @@ set -xg GOPATH $HOME/go
 set -xg GRADLE_HOME ~/.gradle/wrapper/dists/gradle-5.1.1-bin
 set -xg GRADLE_USER_HOME ~/.gradle
 set -xg ERL_AFLAGS "-kernel shell_history enabled"
+set -xg ENHANCD_FILTER fzf
 
 set -U FZF_LEGACY_KEYBINDINGS 0
 
