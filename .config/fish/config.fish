@@ -24,17 +24,16 @@ alias lla='ls -la'
 alias lt='ls -T'
 alias vim=nvim
 
-# pip fish completion start
-function __fish_complete_pip
-    set -lx COMP_WORDS (commandline -o) ""
-    set -lx COMP_CWORD (math (contains -i -- (commandline -t) $COMP_WORDS)-1)
-    set -lx PIP_AUTO_COMPLETE 1
-    string split \  -- (eval $COMP_WORDS[1])
-end
-complete -fa "(__fish_complete_pip)" -c pip
-# pip fish completion end
-
 alias ssh="assh wrapper ssh"
+
+if test -d /opt/asdf-vm
+  source /opt/asdf-vm/asdf.fish
+  source /opt/asdf-vm/completions/asdf.fish
+end
+
+if which direnv &>/dev/null
+  eval (direnv hook fish)
+end
 
 function start_tmux
   set PPID (echo (ps --pid %self -o ppid --no-headers) | xargs)
