@@ -6,5 +6,5 @@ git_repos = [
 disable = ["emacs", "go"]
 
 [commands]
-"Doom refresh" = "cd ~/.doom.d; ~/.emacs.d/bin/doom refresh"
+"Doom sync" = "cd ~/.doom.d; ~/.emacs.d/bin/doom sync"
 "Doom update" = "cd ~/.doom.d; ~/.emacs.d/bin/doom update"
