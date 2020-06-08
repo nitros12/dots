@@ -1,5 +1,5 @@
 set -xg NPM_PACKAGES "$HOME/.npm-packages"
-set -x XDG_CONFIG_HOME "$HOME/.config"
+set -xg XDG_CONFIG_HOME "$HOME/.config"
 set -xg EDITOR nvim
 set -xg CFLAGS "-march=native -mtune=native -O2 -pipe"
 set -xg CXXFLAGS $CFLAGS
@@ -8,13 +8,14 @@ set -xg GOPATH $HOME/go
 set -xg GRADLE_HOME ~/.gradle/wrapper/dists/gradle-5.1.1-bin
 set -xg GRADLE_USER_HOME ~/.gradle
 set -xg ERL_AFLAGS "-kernel shell_history enabled"
+set -xg ENHANCD_FILTER fzf
 
 set -U FZF_LEGACY_KEYBINDINGS 0
 
 set -gx PATH
 set -gx PATH /usr/local/bin /usr/local/sbin
 set -gx PATH /usr/local/opt/coreutils/libexec/gnubin $PATH
-set -gx PATH $PATH "/opt/cuda/bin" "$HOME/.poetry/bin" "$NPM_PACKAGES/bin" $HOME/.cargo/bin $HOME/.local/bin $HOME/.gem/ruby/2.5.0/bin /home/ben/.gem/ruby/2.6.0/bin /app/*
+set -gx PATH $PATH "$GOPATH/bin" "$HOME/.ghcup/bin" "/opt/cuda/bin" "$HOME/.poetry/bin" "$NPM_PACKAGES/bin" $HOME/.cargo/bin $HOME/.local/bin $HOME/.gem/ruby/2.5.0/bin /home/ben/.gem/ruby/2.6.0/bin /app/*
 set -gx PATH $PATH /usr/bin /bin /usr/sbin /sbin /opt/local/bin /opt/local/sbin
 
 alias ls=exa
@@ -24,17 +25,16 @@ alias lla='ls -la'
 alias lt='ls -T'
 alias vim=nvim
 
-# pip fish completion start
-function __fish_complete_pip
-    set -lx COMP_WORDS (commandline -o) ""
-    set -lx COMP_CWORD (math (contains -i -- (commandline -t) $COMP_WORDS)-1)
-    set -lx PIP_AUTO_COMPLETE 1
-    string split \  -- (eval $COMP_WORDS[1])
-end
-complete -fa "(__fish_complete_pip)" -c pip
-# pip fish completion end
-
 alias ssh="assh wrapper ssh"
+
+if test -d /opt/asdf-vm
+  source /opt/asdf-vm/asdf.fish
+  source /opt/asdf-vm/completions/asdf.fish
+end
+
+if which direnv &>/dev/null
+  eval (direnv hook fish)
+end
 
 source ~/.iterm2_shell_integration.fish
 
