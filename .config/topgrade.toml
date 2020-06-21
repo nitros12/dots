@@ -1,9 +1,10 @@
-git_repos = [
+disable = ["emacs", "go"]
+
+[git]
+repos = [
   "~/.doom.d",
   "~/.emacs.d"
 ]
-
-disable = ["emacs", "go"]
 
 [commands]
 "Doom sync" = "cd ~/.doom.d; ~/.emacs.d/bin/doom sync"
