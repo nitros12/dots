@@ -9,4 +9,4 @@ arguments = "--rebase --autostash"
 
 [commands]
 "Doom sync" = "cd ~/.doom.d; ~/.emacs.d/bin/doom sync"
-"Doom update" = "cd ~/.doom.d; ~/.emacs.d/bin/doom update"
+"Doom upgrade" = "cd ~/.doom.d; ~/.emacs.d/bin/doom upgrade"
