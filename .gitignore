@@ -39,3 +39,4 @@ build/
 .gdb_history
 /pa/kangaroo_jack/peda-session-jump.txt
 /.envrc
+/.direnv/

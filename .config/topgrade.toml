@@ -1,10 +1,11 @@
-disable = ["emacs", "go"]
+disable = ["emacs", "go", "snap"]
 
 [git]
 repos = [
   "~/.doom.d",
   "~/.emacs.d"
 ]
+arguments = "--rebase --autostash"
 
 [commands]
 "Doom sync" = "cd ~/.doom.d; ~/.emacs.d/bin/doom sync"

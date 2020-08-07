@@ -51,8 +51,12 @@
   name = "lang#haskell"
 
 [[layers]]
+  name = "lang#c"
+
+[[layers]]
   name = "lsp"
   filetypes = [
     "rust",
-    "haskell"
+    "haskell",
+    "c"
   ]
