@@ -3,8 +3,6 @@ success_symbol = "[λ](bold green)"
 error_symbol = "[λ](bold red)"
 
 [git_status]
-prefix = "("
-suffix = ") "
 style = "bold blue"
 
 [haskell]
@@ -12,3 +10,10 @@ disabled=true
 
 [nodejs]
 disabled=true
+
+[custom]
+
+[custom.tab]
+command = "tab --starship"
+when = "tab --starship"
+style = "bold blue"
