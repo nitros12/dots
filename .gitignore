@@ -40,3 +40,4 @@ build/
 /pa/kangaroo_jack/peda-session-jump.txt
 /.envrc
 /.direnv/
+/.venv/
