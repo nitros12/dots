@@ -7,9 +7,6 @@ repos = [
 ]
 arguments = "--rebase --autostash"
 
-[linux]
-yay_binary_name = "paru"
-
 [commands]
 "Doom sync" = "cd ~/.doom.d; ~/.emacs.d/bin/doom sync"
 "Doom upgrade" = "cd ~/.doom.d; ~/.emacs.d/bin/doom upgrade"
