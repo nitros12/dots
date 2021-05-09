@@ -57,6 +57,5 @@
   name = "lsp"
   filetypes = [
     "rust",
-    "haskell",
     "c"
   ]

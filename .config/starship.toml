@@ -5,15 +5,7 @@ error_symbol = "[λ](bold red)"
 [git_status]
 style = "bold blue"
 
-[haskell]
-disabled=true
-
 [nodejs]
 disabled=true
 
 [custom]
-
-[custom.tab]
-command = "tab --starship"
-when = "tab --starship"
-style = "bold blue"

@@ -10,11 +10,12 @@ set -xg GRADLE_USER_HOME ~/.gradle
 set -xg ERL_AFLAGS "-kernel shell_history enabled"
 set -xg ENHANCD_FILTER fzf
 
+set -U FZF_DEFAULT_OPTS "--cycle --layout=reverse --height 60% --preview-window=wrap"
 set -U FZF_LEGACY_KEYBINDINGS 0
 
 set -gx PATH
 set -gx PATH /usr/local/bin /usr/local/sbin
-set -gx PATH $PATH "$GOPATH/bin" "$HOME/.ghcup/bin" "/opt/cuda/bin" "$HOME/.poetry/bin" "$NPM_PACKAGES/bin" $HOME/.cargo/bin $HOME/.local/bin $HOME/.gem/ruby/2.5.0/bin /home/ben/.gem/ruby/2.6.0/bin /app/*
+set -gx PATH $PATH "/usr/bin/vendor_perl" "$GOPATH/bin" "/opt/cuda/bin" "$HOME/.poetry/bin" $HOME/.yarn/bin "$NPM_PACKAGES/bin" $HOME/.cargo/bin $HOME/.local/bin $HOME/.gem/ruby/2.5.0/bin /home/ben/.gem/ruby/2.6.0/bin /app/*
 set -gx PATH /usr/bin /bin /usr/sbin /sbin $PATH
 
 alias ls=exa
@@ -24,15 +25,18 @@ alias lla='ls -la'
 alias lt='ls -T'
 alias vim=nvim
 
-alias ssh="assh wrapper ssh"
+alias ssh="assh wrapper ssh --"
 
-if test -d /opt/asdf-vm
-  source /opt/asdf-vm/asdf.fish
-  source /opt/asdf-vm/completions/asdf.fish
+if which zoxide &>/dev/null
+  zoxide init fish | source
+end
+
+if test -d ~/.asdf
+  source ~/.asdf/asdf.fish
 end
 
 if which direnv &>/dev/null
-  eval (direnv hook fish)
+  direnv hook fish | source
 end
 
 function start_tmux
@@ -66,7 +70,17 @@ if test "$TERM" = "dumb" || test "$TERM" = ""
   function fish_greeting; end
   function fish_title; end
 else
-  eval (starship init fish)
+  starship init fish | source
   start_tmux
 end
 
+# ghcup-env
+set -q GHCUP_INSTALL_BASE_PREFIX[1]; or set GHCUP_INSTALL_BASE_PREFIX $HOME
+test -f /home/ben/.ghcup/env ; and set -gx PATH $HOME/.cabal/bin /home/ben/.ghcup/bin $PATH
+
+function activate_conda
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+eval /opt/anaconda/bin/conda "shell.fish" "hook" $argv | source
+# <<< conda initialize <<<
+end

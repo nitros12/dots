@@ -1,4 +1,4 @@
-disable = ["emacs", "go", "snap"]
+disable = ["emacs", "snap"]
 
 [git]
 repos = [
