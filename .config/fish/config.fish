@@ -1,4 +1,4 @@
-set -xg NPM_PACKAGES "$HOME/.npm-packages"
+set -xg NPM_PACKAGES "$HOME/.npm-global"
 set -xg XDG_CONFIG_HOME "$HOME/.config"
 set -xg EDITOR nvim
 set -xg CFLAGS "-march=native -mtune=native -O2 -pipe"
@@ -10,8 +10,7 @@ set -xg GRADLE_USER_HOME ~/.gradle
 set -xg ERL_AFLAGS "-kernel shell_history enabled"
 set -xg ENHANCD_FILTER fzf
 
-set -U FZF_DEFAULT_OPTS "--cycle --layout=reverse --height 60% --preview-window=wrap"
-set -U FZF_LEGACY_KEYBINDINGS 0
+set -gx FZF_DEFAULT_OPTS '--cycle --layout=reverse --border --height=70% --preview-window=wrap --marker="*" --preview-window="bottom:3:wrap"'
 
 set -gx PATH
 set -gx PATH /usr/local/bin /usr/local/sbin

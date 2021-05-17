@@ -8,4 +8,7 @@ style = "bold blue"
 [nodejs]
 disabled=true
 
+[ocaml]
+disabled=true
+
 [custom]
