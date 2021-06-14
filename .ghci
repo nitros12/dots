@@ -1,0 +1,10 @@
+:unset +s +t
+:set +m -v0
+:seti -w -XOverloadedStrings -XTypeApplications
+:set prompt  "\ESC[1;34m\STXλ> \ESC[0m\STX"
+:set prompt-cont  "\ESC[1;34m\STX > \ESC[0m\STX"
+:set editor nvim
+
+:def! rr \_ -> return ":script ~/.ghci"
+-- Turn on output of types.  This line should be last.
+:set +t

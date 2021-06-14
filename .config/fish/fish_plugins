@@ -7,7 +7,6 @@ jethrokuan/z
 jorgebucaran/fisher
 laughedelic/pisces
 oh-my-fish/plugin-gityaw
-oh-my-fish/plugin-grc
 orefalo/g2
-Panoplos/fish-regex-rename-files
-tuvistavie/fish-fastdir
+oh-my-fish/plugin-grc
+PatrickF1/fzf.fish
