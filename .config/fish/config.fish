@@ -83,3 +83,5 @@ function activate_conda
 eval /opt/anaconda/bin/conda "shell.fish" "hook" $argv | source
 # <<< conda initialize <<<
 end
+
+fzf_configure_bindings --directory=\cf
