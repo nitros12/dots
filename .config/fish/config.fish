@@ -9,6 +9,7 @@ set -xg GRADLE_HOME ~/.gradle/wrapper/dists/gradle-5.1.1-bin
 set -xg GRADLE_USER_HOME ~/.gradle
 set -xg ERL_AFLAGS "-kernel shell_history enabled"
 set -xg ENHANCD_FILTER fzf
+set -xg GO111MODULE on
 
 set -U FZF_LEGACY_KEYBINDINGS 0
 
@@ -69,4 +70,3 @@ else
   eval (starship init fish)
   start_tmux
 end
-
